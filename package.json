@@ -1,0 +1,34 @@
+{
+  "name": "typescript-action-template",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "npx ncc run ./src/index.ts",
+    "build": "npx ncc build ./src/index.ts",
+    "test": "jest",
+    "ghadocs": "github-action-readme-generator --readme README.md && git add README.md"
+  },
+  "dependencies": {
+    "actions-toolkit": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/jest": "^26.0.15",
+    "@types/js-yaml": "^3.12.5",
+    "@vercel/ncc": "^0.34.0",
+    "github-action-readme-generator": "1.0.12",
+    "husky": "^4.3.0",
+    "jest": "^26.6.3",
+    "jest-circus": "^27.4.5",
+    "nock": "^13.0.5",
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.1.0",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}

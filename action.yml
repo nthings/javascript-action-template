@@ -1,0 +1,10 @@
+name: 'typescript-action-template'
+description: 'Use this template to generate new javascript Github Actions'
+author: 'nthings <n_othing@hotmail.com>'
+inputs:
+  example:
+    description: 'Example input'
+    required: true
+runs:
+  using: node16
+  main: dist/index.js

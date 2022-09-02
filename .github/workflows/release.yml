@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+      - name: Bump version
+        id: set-version
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: patch
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install deps and build
+        run: npm ci && npm run build
+      - uses: JasonEtco/build-and-tag-action@v2
+        with:
+          tag_name: ${{ steps.set-version.outputs.new_tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.set-version.outputs.new_tag }}
+          release_name: Release ${{ steps.set-version.outputs.new_tag }}
+          draft: false
+          prerelease: false
